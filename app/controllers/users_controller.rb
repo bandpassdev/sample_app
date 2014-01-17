@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
-  before_action :signed_in_user, only: [:edit, :update]
+  before_action :signed_in_user, only: [:edit, :index, :update]
   before_action :correct_user,   only: [:edit, :update]
 
  def edit
   end
-  
+
   def index
     @users = User.all
   end
