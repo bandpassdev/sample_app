@@ -62,32 +62,25 @@ describe "User pages" do
         it { should have_title(user.name) }
         it { should have_selector('div.alert.alert-success', text: 'Welcome') }
       end
-      
-      describe "followed by signout" do
-        before { click_link "Sign out" }
-        it { should have_link('Sign in') }
-      end
+
     end
 
   end
 
   describe "edit" do
-    let(:user) { FactoryGirl.create(:user) }
 
-    before { visit edit_user_path(user) }
+    let(:user) { FactoryGirl.create(:user) }
+    before { 
+      sign_in user
+      visit edit_user_path(user) 
+    }
 
     describe "page" do
       it { should have_content("Update your profile") }
       it { should have_title("Edit user") }
-      #TAKING OUT THE GRAVITAR it { should have_link('change', href: 'http://gravatar.com/emails') }
+      it { should have_link('change', href: 'http://gravatar.com/emails') }
     end
 
-
-    before do
-      sign_in user
-      visit edit_user_path(user)
-    end
-    
     describe "with valid information" do
       let(:new_name)  { "New Name" }
       let(:new_email) { "new@example.com" }
@@ -107,3 +100,4 @@ describe "User pages" do
     end
   end
 end
+
